@@ -42,8 +42,8 @@ public class DataInitializer {
         this.vehicleService.save("KI 2656 AB", "OPEL", "Astra", 1998, "SIVA", "1ASD12313", "lazo");
 
 
-        InspectionCenter center = new InspectionCenter("Технички преглед - неЗнам", City.Кичево, "број?");
-        InspectionCenter center2 = new InspectionCenter("Технички преглед - знам", City.Кичево, "број?");
+        InspectionCenter center = new InspectionCenter("Технички преглед - 1", City.Кичево, "број?");
+        InspectionCenter center2 = new InspectionCenter("Технички преглед - 2", City.Кичево, "број?");
         InspectionCenter savedCenter = this.inspectionCenterService.save(center.getName(), center.getCity(), center.getContactDetails()).orElseThrow(() -> new RuntimeException("Failed to save InspectionCenter"));
         InspectionCenter savedCenter2 = this.inspectionCenterService.save(center2.getName(), center2.getCity(), center2.getContactDetails()).orElseThrow(() -> new RuntimeException("Failed to save InspectionCenter"));
 
