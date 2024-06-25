@@ -22,7 +22,7 @@ services:
       - db1
 
   app:
-    image: 35311/vehicle-inspection-app:latest
+    image: lejz0/vehicle-inspection-app:latest
     ports:
       - "9090:9090"
     environment:
