@@ -1,0 +1,84 @@
+<script src="https://js.stripe.com/v3/"></script>
+<div class="container w-25 mt-3 mb-3 .bg-light.bg-gradient p-4 shadow-lg rounded">
+    <form action='/charge' method='POST' id='checkout-form'>
+        <input type="hidden" name="vehicleId" th:value="${vehicle.id}">
+        <div class="form-group">
+            <label for="vehicle">Број на таблици</label>
+            <input id="vehicle" type="text" th:value="${vehicle.registrationNumber}" name="vehicle" disabled>
+        </div>
+        <div class="form-group">
+            <label for="center">Изберете центар:</label>
+            <select id="center" name="center" class="form-select">
+                <option th:each="item : ${centers}" th:value="${item.id}" th:text="${item.name}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="date">Изберете датум:</label>
+            <select id="date" name="date" class="form-select">
+                </select>
+        </div>
+        <div class="form-group">
+            <label for="time">Изберете термин:</label>
+            <select id="time" name="time" class="form-select">
+
+            </select>
+        </div>
+
+        <input type='hidden' th:value='${amount}' name='amount'/>
+        <label>Price:<span th:text='${amount/100}'/></label>
+        <script
+                src='https://checkout.stripe.com/checkout.js'
+                class='stripe-button'
+                th:attr='data-key=${stripePublicKey},
+                    data-amount=${amount},
+                    data-currency=${currency}'
+                data-name='EMT'
+                data-description='EMT Order'
+                data-image
+                        ='https://www.baeldung.com/wp-content/themes/baeldung/favicon/android-chrome-192x192.png'
+                data-locale='auto'
+                data-zip-code='false'>
+        </script>
+    </form>
+</div>
+
+
+
+
+
+
+<script th:inline="javascript">
+
+    // Add event listener to the center select element
+    document.getElementById('center').addEventListener('change', function() {
+        var centerId = this.value;
+        // Make AJAX request to fetch available terms for selected center
+        fetch('/terms/' + centerId)
+            .then(response => response.json())
+            .then(data => {
+                // Extract unique dates and times
+                var uniqueDates = Array.from(new Set(data.map(term => term.date)));
+                var uniqueTimes = Array.from(new Set(data.map(term => term.time)));
+
+                // Update the date select element options
+                var dateSelect = document.getElementById('date');
+                dateSelect.innerHTML = '';
+                uniqueDates.forEach(date => {
+                    var option = document.createElement('option');
+                    option.textContent = date;
+                    dateSelect.appendChild(option);
+                });
+
+                // Update the time select element options
+                var timeSelect = document.getElementById('time');
+                timeSelect.innerHTML = '';
+                uniqueTimes.forEach(time => {
+                    var option = document.createElement('option');
+                    option.textContent = time;
+                    timeSelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error fetching available terms:', error));
+
+    });
+</script>

@@ -1,0 +1,41 @@
+<div class="container" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <th:block th:if="${inspections.size > 0}">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col" sec:authorize="hasRole('ROLE_ADMIN')">Лице</th>
+                <th scope="col">Возило</th>
+                <th scope="col">Термин</th>
+                <th scope="col">Технички преглед</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${inspections}">
+                <td th:text="${item.user.name + ' ' + item.user.surname}" sec:authorize="hasRole('ROLE_ADMIN')"></td>
+                <td th:text="${item.vehicle.make + ' ' + item.vehicle.model}"></td>
+                <td th:text="${item.dateTime.date + ' ' + item.dateTime.time}"></td>
+                <td th:text="${item.inspectionCenter.name}"></td>
+
+                <td sec:authorize="hasRole('ROLE_ADMIN')">
+                    <form th:action="@{'/vehicles/delete/{id}' (id=${item.getId()})}"
+                          th:method="POST">
+                        <button type="submit"
+                                class="btn btn-sm btn-danger delete-product">
+                            <i class="fas fa-trash-alt"></i> Избриши
+                        </button>
+                    </form>
+                </td>
+                <td>
+                    <span class="text-success font-weight-bold">Платено</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </th:block>
+    <div class="d-flex flex-column align-items-center">
+        <th:block th:if="${inspections.size == 0}">
+            <p class="display-3">Нема закажани термини</p>
+        </th:block>
+    </div>
+</div>
