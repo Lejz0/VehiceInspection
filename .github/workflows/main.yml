@@ -22,7 +22,5 @@ jobs:
 
       - name: Build and Push Docker image
         run: |
-          docker build -t ${{ github.repository_owner }}/${{ secrets.DOCKER_REPOSITORY }}:${{ github.sha }} .
           docker build -t ${{ github.repository_owner }}/${{ secrets.DOCKER_REPOSITORY }}:latest .
-          docker push ${{ github.repository_owner }}/${{ secrets.DOCKER_REPOSITORY }}:${{ github.sha }}
           docker push ${{ github.repository_owner }}/${{ secrets.DOCKER_REPOSITORY }}:latest
