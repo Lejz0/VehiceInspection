@@ -50,8 +50,9 @@ public class DataInitializer {
                 this.userService.register("test2", "test2", "test2", "test2", "test2", Role.ROLE_USER);
             }
 
-            this.vehicleService.save("KI 2656 AB", "OPEL", "Astra", 1998, "SIVA", "1ASD12313", "lazo");
-
+            if (vehicleService.findByPlate("KI 2656 AB").isEmpty()) {
+                this.vehicleService.save("KI 2656 AB", "OPEL", "Astra", 1998, "SIVA", "1ASD12313", "lazo");
+            }
             InspectionCenter center = new InspectionCenter("Технички преглед - 1", City.Кичево, "број?");
             InspectionCenter center2 = new InspectionCenter("Технички преглед - 2", City.Кичево, "број?");
             InspectionCenter savedCenter = this.inspectionCenterService.save(center.getName(), center.getCity(), center.getContactDetails()).orElseThrow(() -> new RuntimeException("Failed to save InspectionCenter"));
