@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: vehicle-inspection-ingress
+  namespace: vehicle-inspection
+  annotations:
+    traefik.ingress.kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+    - host: kiii-app.com
+      http:
+        paths:
+          - path: /app
+            pathType: Prefix
+            backend:
+              service:
+                name: vehicle-inspection-app
+                port:
+                  number: 9090
+
+          - path: /adminer
+            pathType: Prefix
+            backend:
+              service:
+                name: adminer
+                port:
+                  number: 8080

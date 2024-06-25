@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgresql-db
+  namespace: vehicle-inspection
+spec:
+  serviceName: postgresql-db
+  replicas: 1  
+  selector:
+    matchLabels:
+      app: postgresql-db
+  template:
+    metadata:
+      labels:
+        app: postgresql-db
+    spec:
+      containers:
+        - name: postgresql
+          image: postgres:latest 
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: POSTGRES_PASSWORD
+            - name: POSTGRES_DB
+              value: db1  
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: postgresql-data
+              mountPath: /var/lib/postgresql/data
+  volumeClaimTemplates:
+    - metadata:
+        name: postgresql-data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 1Gi  
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgresql-db
+  namespace: vehicle-inspection
+spec:
+  selector:
+    app: postgresql-db
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+  

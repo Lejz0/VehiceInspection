@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-configmap
+  namespace: vehicle-inspection
+data:
+  SPRING_DATASOURCE_URL: "jdbc:postgresql://postgresql-db:5432/db1"
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db-secret
+  namespace: vehicle-inspection
+type: Opaque
+data:
+  POSTGRES_PASSWORD: cGFzc3dvcmQ= 
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vehicle-inspection-app
+  namespace: vehicle-inspection
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: vehicle-inspection-app
+  template:
+    metadata:
+      labels:
+        app: vehicle-inspection-app
+    spec:
+      containers:
+        - name: vehicle-inspection-app
+          image: lejz0/vehicle-inspection-app:latest
+          ports:
+            - containerPort: 9090
+          envFrom:
+            - configMapRef:
+                name: app-configmap
+            - secretRef:
+                name: db-secret

@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: vehicle-inspection-app-service
+  namespace: vehicle-inspection
+spec:
+  selector:
+    app: vehicle-inspection-app
+  ports:
+    - protocol: TCP
+      port: 9090
+      targetPort: 9090
+  type: ClusterIP  
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: adminer-service
+  namespace: vehicle-inspection
+spec:
+  selector:
+    app: adminer
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP 
+
