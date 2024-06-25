@@ -21,6 +21,9 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD}}
 
       - name: Build and Push Docker image
-        run: |
-          docker build -t ${{ github.repository_owner }}/${{ secrets.DOCKER_REPOSITORY }}:latest .
-          docker push ${{ github.repository_owner }}/${{ secrets.DOCKER_REPOSITORY }}:latest
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: |
+            lejz0/vehicle-inspection-app:latest
