@@ -23,10 +23,15 @@ metadata:
   name: vehicle-inspection-app
   namespace: vehicle-inspection
 spec:
-  replicas: 1 
+  replicas: 5 
   selector:
     matchLabels:
       app: vehicle-inspection-app
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 2
   template:
     metadata:
       labels:
