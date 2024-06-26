@@ -10,7 +10,7 @@ spec:
     - host: kiii-app.com
       http:
         paths:
-          - path: /app
+          - path: /
             pathType: Prefix
             backend:
               service:
