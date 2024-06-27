@@ -46,7 +46,7 @@ jobs:
         uses: github/codeql-action/analyze@v3
         with:
           category: "/language:${{matrix.language}}"
-          output: codeql-analysis-results.sarif #
+          output: codeql-analysis-results.sarif 
 
       - name: Upload CodeQL Analysis results
         uses: actions/upload-artifact@v3
