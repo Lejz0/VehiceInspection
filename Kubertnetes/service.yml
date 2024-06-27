@@ -20,7 +20,7 @@ metadata:
   namespace: vehicle-inspection
 spec:
   selector:
-    app: adminer
+    app: vehicle-inspection-app
   ports:
     - protocol: TCP
       port: 8080
