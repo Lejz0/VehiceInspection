@@ -38,6 +38,9 @@ public class DataInitializer {
     @PostConstruct
     public void init() {
         try {
+            if (!userExists("test4")) { //Test commit
+                this.userService.register("test4", "test4", "test4", "Lazo", "Nikoloski", Role.ROLE_ADMIN);
+            }
             if (!userExists("test3")) {
                 this.userService.register("test3", "test3", "test3", "Lazo", "Nikoloski", Role.ROLE_ADMIN);
             }
