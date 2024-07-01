@@ -67,13 +67,13 @@ public class VehicleInspectionController {
         List<InspectionCenter> inspectionCenters = this.inspectionCenterService.findAll();
         model.addAttribute("vehicle", vehicle);
         model.addAttribute("centers", inspectionCenters);
-        model.addAttribute("amount", 50 * 100); // in cents
+        model.addAttribute("amount", 50 * 100);
         model.addAttribute("stripePublicKey", stripePublicKey);
         model.addAttribute("currency", Currency.EUR);
         model.addAttribute("bodyContent", "createInspection");
         return "master-template";    }
 
-    @PostMapping("/create/{id}")
+/*    @PostMapping("/create/{id}")
     public String saveInspection(@PathVariable Long id,
                                  @RequestParam Long center,
                                  @RequestParam LocalDate date,
@@ -86,6 +86,6 @@ public class VehicleInspectionController {
 
         this.vehicleInspectionService.reserve(term.getId(), user.getUsername(), id, center);
         return "redirect:/inspection";
-    }
+    }*/
 
 }

@@ -77,19 +77,16 @@ public class InspectionCenterImpl implements InspectionCenterService {
                 term.setTime(inspectionTime);
                 term.setScheduled(false);
 
-                terms.add(term); // Adding to the list but not saving yet
+                terms.add(term);
                 currentTime = currentTime.plusMinutes(30);
             }
             startDate = startDate.plusDays(1);
         }
 
-        // Clear existing terms before saving new ones
         center.getAvailableDates().clear();
 
-        // Save all terms at once after creating them
         this.inspectionTermRepository.saveAll(terms);
 
-        // Set the generated terms to the inspection center
         center.setAvailableDates(terms);
         this.centerRepository.save(center);
     }
