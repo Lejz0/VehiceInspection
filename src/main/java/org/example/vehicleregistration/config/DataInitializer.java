@@ -71,8 +71,6 @@ public class DataInitializer {
             e.printStackTrace();
         }
     }
-
-    // Helper method to check if user already exists
     private boolean userExists(String username) {
         try {
             this.userService.findByUsername(username);

@@ -18,7 +18,7 @@ public class InspectionTerm {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties("inspections")
     private InspectionCenter inspectionCenter;
 

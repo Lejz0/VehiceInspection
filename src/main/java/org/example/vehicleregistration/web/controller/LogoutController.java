@@ -2,6 +2,7 @@ package org.example.vehicleregistration.web.controller;
 
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class LogoutController {
 
     @GetMapping
-    public String logout(HttpServletRequest request) {
-        request.getSession().invalidate();
+    public String logout(HttpSession session) {
+        session.invalidate();
         return "redirect:/login";
     }
 }

@@ -44,7 +44,7 @@ public class WebSecurityConfig {
                     httpSecurityHeadersConfigurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable);
                 })
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/home", "/assets/**", "/register", "/vehicles", "/api/**", "/login", "/h2-console/**", "/terms/**")
+                        .requestMatchers("/", "/home", "/register", "/vehicles", "/login", "/terms/**")
                         .permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest()

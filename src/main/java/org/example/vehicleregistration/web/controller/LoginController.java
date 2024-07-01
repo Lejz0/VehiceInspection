@@ -1,6 +1,7 @@
 package org.example.vehicleregistration.web.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.example.vehicleregistration.model.User;
 import org.example.vehicleregistration.model.exceptions.InvalidUserCredentialsException;
 import org.example.vehicleregistration.service.AuthService;
@@ -9,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/login")
@@ -27,13 +29,13 @@ public class LoginController {
     }
 
     @PostMapping
-    public String login(HttpServletRequest request, Model model) {
-        User user = null;
+    public String login(@RequestParam String username,
+                        @RequestParam String password,
+                        HttpSession session,
+                        Model model) {
         try {
-            user = this.authService.login(request.getParameter("username"),
-                    request.getParameter("password"));
-            request.getSession().setAttribute("user", user);
-            System.out.println("login");
+            User user = this.authService.login(username, password);
+            session.setAttribute("user", user);
             return "redirect:/";
         } catch (InvalidUserCredentialsException exception) {
             model.addAttribute("hasError", true);

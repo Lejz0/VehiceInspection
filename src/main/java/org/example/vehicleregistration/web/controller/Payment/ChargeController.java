@@ -44,7 +44,7 @@ public class ChargeController {
             vehicleInspectionService.reserve(term.getId(), user.getUsername(), vehicleId, center);
             return "redirect:/inspection";
         } else {
-            return "payment-failed"; // redirect to a payment failure page
+            return "payment-failed";
         }
     }
 }
