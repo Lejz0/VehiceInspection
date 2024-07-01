@@ -37,47 +37,22 @@ public class DataInitializer {
 
     @PostConstruct
     public void init() {
-        try {
-            if (!userExists("test4")) { //Test commit
-                this.userService.register("test4", "test4", "test4", "Lazo", "Nikoloski", Role.ROLE_ADMIN);
-            }
-            if (!userExists("test3")) {
-                this.userService.register("test3", "test3", "test3", "Lazo", "Nikoloski", Role.ROLE_ADMIN);
-            }
-            if (!userExists("test")) {
-                this.userService.register("test", "test", "test", "Lazo", "Nikoloski", Role.ROLE_ADMIN);
-            }
+        this.userService.register("test4", "test4", "test4", "Lazo", "Nikoloski", Role.ROLE_ADMIN);
+        this.userService.register("test3", "test3", "test3", "Lazo", "Nikoloski", Role.ROLE_ADMIN);
+        this.userService.register("test", "test", "test", "Lazo", "Nikoloski", Role.ROLE_ADMIN);
+        this.userService.register("lazo", "lazo", "lazo", "lazo", "lazo", Role.ROLE_USER);
+        this.userService.register("test2", "test2", "test2", "test2", "test2", Role.ROLE_USER);
+        this.vehicleService.save("KI 2656 AB", "OPEL", "Astra", 1998, "SIVA", "1ASD12313", "lazo");
 
-            if (!userExists("lazo")) {
-                this.userService.register("lazo", "lazo", "lazo", "lazo", "lazo", Role.ROLE_USER);
-            }
+        InspectionCenter center = new InspectionCenter("Технички преглед - 1", City.Кичево, "број?");
+        InspectionCenter center2 = new InspectionCenter("Технички преглед - 2", City.Кичево, "број?");
+        InspectionCenter savedCenter = this.inspectionCenterService.save(center.getName(), center.getCity(), center.getContactDetails()).orElseThrow(() -> new RuntimeException("Failed to save InspectionCenter"));
+        InspectionCenter savedCenter2 = this.inspectionCenterService.save(center2.getName(), center2.getCity(), center2.getContactDetails()).orElseThrow(() -> new RuntimeException("Failed to save InspectionCenter"));
 
-            if (!userExists("test2")) {
-                this.userService.register("test2", "test2", "test2", "test2", "test2", Role.ROLE_USER);
-            }
+        this.inspectionCenterService.generateYearlyTerms(savedCenter.getId());
+        this.inspectionCenterService.generateYearlyTerms(savedCenter2.getId());
 
-            if (vehicleService.findByPlate("KI 2656 AB").isEmpty()) {
-                this.vehicleService.save("KI 2656 AB", "OPEL", "Astra", 1998, "SIVA", "1ASD12313", "lazo");
-            }
-            InspectionCenter center = new InspectionCenter("Технички преглед - 1", City.Кичево, "број?");
-            InspectionCenter center2 = new InspectionCenter("Технички преглед - 2", City.Кичево, "број?");
-            InspectionCenter savedCenter = this.inspectionCenterService.save(center.getName(), center.getCity(), center.getContactDetails()).orElseThrow(() -> new RuntimeException("Failed to save InspectionCenter"));
-            InspectionCenter savedCenter2 = this.inspectionCenterService.save(center2.getName(), center2.getCity(), center2.getContactDetails()).orElseThrow(() -> new RuntimeException("Failed to save InspectionCenter"));
 
-            this.inspectionCenterService.generateYearlyTerms(savedCenter.getId());
-            this.inspectionCenterService.generateYearlyTerms(savedCenter2.getId());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    private boolean userExists(String username) {
-        try {
-            this.userService.findByUsername(username);
-            return true;
-        } catch (UsernameNotFoundException e) {
-            return false;
-        }
     }
 
 }
