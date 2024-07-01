@@ -28,7 +28,7 @@ public class InspectionCenter {
     private String contactDetails;
 
     @OneToMany(mappedBy = "inspectionCenter")
-    @JsonIgnoreProperties("inspectionCenter")
+    @JsonIgnore
     private List<VehicleInspection> inspections;
 
     @OneToMany(mappedBy = "inspectionCenter")

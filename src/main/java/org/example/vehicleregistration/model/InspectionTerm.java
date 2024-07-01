@@ -19,7 +19,7 @@ public class InspectionTerm {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties("inspections")
+    @JsonIgnore
     private InspectionCenter inspectionCenter;
 
     private LocalDate date;
